@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dona Esfiha — Loja Online</title>
+  <style>
+    /* ==== Ajustes para celular ==== */
+@media (max-width: 768px) {
+
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .brand img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .brand h1 {
+    font-size: 22px;
+  }
+
+  .products {
+    grid-template-columns: 1fr; /* 1 coluna no celular */
+  }
+
+  .product {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .product img {
+    width: 90%;
+    max-width: 220px;
+    height: auto;
+  }
+
+  .cart-btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .checkout {
+    margin-top: 20px;
+  }
+
+  footer {
+    font-size: 13px;
+    padding: 16px;
+  }
+
+  .whatsapp-float {
+    bottom: 15px;
+    right: 15px;
+    padding: 8px;
+  }
+}
+
+    :root{
+      --primary:#c8102e; /* vermelho */
+      --accent:#f5c129;  /* amarelo */
+      --bg:#fff6f6;
+      --card-bg:#fff;
+      --muted:#666;
+      --radius:14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#fff 0%, #fff6f6 60%);
+      color:#111;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    header{
+      background:var(--primary);
+      color:white;
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .brand img{width:64px;height:64px;object-fit:cover;border-radius:10px;background:#fff}
+    .brand h1{font-size:20px;margin:0;line-height:1}
+    .brand p{margin:0;font-size:12px;opacity:0.95}
+
+    .cart-btn{
+      background:var(--accent);
+      color:var(--primary);
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+      box-shadow:0 6px 18px rgba(200,0,0,0.12);
+    }
+
+    main{padding:24px;max-width:1100px;margin:24px auto;display:grid;grid-template-columns:1fr 360px;gap:20px}
+    /* Products list */
+    .products{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .product{
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .product img{width:120px;height:90px;object-fit:cover;border-radius:10px}
+    .product .info h3{margin:0;font-size:16px}
+    .product .info p{margin:6px 0 10px;color:var(--muted);font-size:13px}
+    .product .info .price{font-weight:800;color:var(--primary)}
+    .product button{
+      background:var(--primary);
+      color:white;
+      border:none;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    /* Right column - cart/checkout */
+    .sidebar{
+      position:sticky; top:24px;
+      align-self:start;
+    }
+    .cart{
+      background:linear-gradient(180deg,#fff 0%, #fffefb 100%);
+      padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.06);
+    }
+    .cart h2{margin:0 0 8px 0}
+    .cart-items{max-height:260px;overflow:auto;padding-right:6px}
+    .cart-item{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #f2f2f2}
+    .cart-item img{width:56px;height:44px;object-fit:cover;border-radius:8px}
+    .cart-item .qty{width:36px}
+    .cart-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-weight:800}
+
+    .checkout{
+      margin-top:16px;background:var(--card-bg);padding:12px;border-radius:12px;
+    }
+    .field{display:flex;flex-direction:column;margin-bottom:8px}
+    label{font-size:13px;margin-bottom:6px;color:var(--muted)}
+    input[type="text"], input[type="number"], input[type="tel"], textarea, select{
+      padding:10px;border-radius:8px;border:1px solid #eee;font-size:14px;
+    }
+    .radio-row{display:flex;gap:8px;flex-wrap:wrap}
+    .radio{
+      padding:8px 10px;border-radius:10px;background:#fff;border:1px solid #f0f0f0;cursor:pointer;
+    }
+    .pay-instr{font-size:13px;color:var(--muted);margin-top:8px}
+
+    .place-btn{
+      margin-top:10px;
+      background:var(--primary);color:white;border:none;padding:12px;border-radius:12px;
+      width:100%;font-weight:800;cursor:pointer;
+    }
+
+    footer{margin-top:24px;padding:20px;text-align:center;color:var(--muted)}
+    .location{font-weight:700;color:var(--primary)}
+
+    /* Responsive */
+    @media (max-width:950px){
+      main{grid-template-columns:1fr 340px;padding:20px}
+      .products{grid-template-columns:1fr}
+    }
+    @media (max-width:740px){
+      header{flex-direction:column;align-items:flex-start;gap:10px}
+      main{grid-template-columns:1fr;padding:16px}
+      .sidebar{position:static}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted);font-size:13px}
+    .pill{background:var(--accent);padding:6px 8px;border-radius:999px;color:var(--primary);font-weight:700}
+    .success{background:#ecf9f1;border-left:4px solid #3aaa6a;padding:10px;border-radius:8px;color:#1b5e35}
+  </style>
+</head>
+<body>
+
+  <body>
+  <header>
+    <div class="brand">
+      <img src="logo-dona-esfiha.png" alt="Logo Dona Esfiha" id="logoImg">
+      <div>
+        <h1>Dona Esfiha</h1>
+        <p>Esfihas artesanais • Valparaíso de Goiás (atrás do shopping)</p>
+      </div>
+    </div>
+  </header>
+
+
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="pill">Entrega: Local</div>
+      <button class="cart-btn" id="openCartBtn">Carrinho (<span id="cartCount">0</span>)</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2 style="margin-top:0">Nosso cardápio</h2>
+      <p class="muted">Clique em <strong>Adicionar</strong> para incluir no carrinho. Fotos reais deixam o site mais atrativo.</p>
+
+      <div class="products" id="productsList">
+        <!-- produtos via JS -->
+      </div>
+
+      <section style="margin-top:18px">
+        <h3>Sobre</h3>
+        <p class="muted">Esfihas quentinhas e recheadas. Pagamentos: Cartão, Débito, Dinheiro e PIX. Entrega em Valparaíso de Goiás.</p>
+      </section>
+    </section>
+
+    <aside class="sidebar">
+      <div class="cart" id="cartBox">
+        <h2>Carrinho</h2>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+          <div>Total</div>
+          <div id="cartTotal">R$ 0,00</div>
+        </div>
+      </div>
+
+      <div class="checkout">
+        <h3>Checkout</h3>
+
+        <div class="field">
+          <label for="name">Nome completo</label>
+          <input id="name" type="text" placeholder="Seu nome" required>
+        </div>
+
+        <div class="field">
+          <label for="phone">Telefone / WhatsApp</label>
+          <input id="phone" type="tel" placeholder="(xx) 9xxxx-xxxx" required>
+        </div>
+
+        <div class="field">
+          <label for="address">Endereço (rua, número, complemento)</label>
+          <textarea id="address" rows="2" placeholder="Ex: Rua X, 123, apt 12" required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Pagamento</label>
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="pay" value="card" checked> Cartão</label>
+            <label class="radio"><input type="radio" name="pay" value="debit"> Débito</label>
+            <label class="radio"><input type="radio" name="pay" value="pix"> PIX</label>
+            <label class="radio"><input type="radio" name="pay" value="cash"> Dinheiro</label>
+          </div>
+        </div>
+
+        <div id="cardFields" style="display:block">
+          <div class="field"><label>Nº do cartão</label><input id="cardNumber" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000"></div>
+          <div style="display:flex;gap:8px">
+            <div class="field" style="flex:1"><label>Validade</label><input id="cardExp" type="text" placeholder="MM/AA"></div>
+            <div class="field" style="width:120px"><label>CVV</label><input id="cardCvv" type="text" inputmode="numeric" placeholder="123"></div>
+          </div>
+        </div>
+
+        <div id="pixInfo" style="display:none" class="pay-instr">
+          <div class="muted">Chave PIX (exemplo):</div>
+          <div style="font-weight:800;margin-top:6px">donaesfiha@pix.exemplo</div>
+          <div class="pay-instr">Após selecionar PIX, finalize o pedido. Você verá instruções para pagar e confirmar.</div>
+        </div>
+
+        <div id="cashInfo" style="display:none" class="pay-instr">
+          <div class="muted">Pagamento em dinheiro</div>
+          <div class="pay-instr">O entregador receberá. Informe se precisa de troco no campo "Observações".</div>
+        </div>
+
+        <button class="place-btn" id="placeOrderBtn">Finalizar compra</button>
+
+        <div id="orderMsg" style="margin-top:10px"></div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div>Endereço: <span class="location">Valparaíso de Goiás — atrás do shopping</span></div>
+    <div style="margin-top:8px;font-size:13px" class="muted">© Dona Esfiha — Feito para pedidos online</div>
+  </footer>
+
+  <script>
+    /* ---------- Dados dos produtos ---------- */
+    const products = [
+  // 🟢 Esfihas Salgadas
+  { id: "e1", name: "Esfiha - Creme de milho com bacon", price: 8.00, img: "creme de milho com bacon.jpg" },
+  { id: "e2", name: "Esfiha - Creme de milho com frango", price: 8.00, img: "frnago.jpg" },
+  { id: "e3", name: "Esfiha - Carne", price: .00, img: "carne.jpeg" },
+  { id: "e4", name: "Esfiha - Frango com catupiry", price: 7.00, img: "esfiha-frango.jpeg" },
+  { id: "e5", name: "Esfiha - Calabresa", price: 7.00, img: "bacon.jpeg" },
+  { id: "e6", name: "Esfiha - Bacon", price: 7.00, img: "esfiha-calabresa.jpeg" },
+  { id: "e7", name: "Esfiha - Camarão", price: 12.00, img: "esfiha-camarao.jpeg" },
+
+  // 🍫 Esfihas Doces
+  { id: "d1", name: "Esfiha Doce - Banana", price: 7.00, img: "esfiha-banana.jpeg" },
+  { id: "d2", name: "Esfiha Doce - Nutella", price: 10.00, img: "esfiha-nutella.jpeg" },
+  { id: "d3", name: "Esfiha Doce - Chocolate com M&M", price: 11.00, img: "esfiha-chocolate-mm.jpeg" },
+  { id: "d4", name: "Esfiha Doce - Chocolate branco com morango", price: 11.00, img: "esfiha-chocolate-morango.jpeg" },
+
+  // 🥤 Bebidas
+  { id: "b1", name: "Coca-Cola Original 350ml", price: 6.00, img: "coca 310.jpg" },
+  { id: "b2", name: "Coca-Cola Zero 350ml", price: 6.00, img: "zero 350.png" },
+  { id: "b3", name: "Coca-Cola Original 600ml", price: 8.00, img: "600 normal.webp" },
+  { id: "b4", name: "Guaraná Antarctica 350ml", price: 6.00, img: "guarana 350.png" },
+  { id: "b5", name: "Guaraná Antarctica Zero 350ml", price: 6.00, img: "zero guarana 50.webp" },
+  { id: "b6", name: "Guaraná Antarctica 600ml", price: 8.00, img: "guarana 600.jpg" },
+  { id: "b7", name: "Suco Dell Vale de Uva 310ml", price: 6.00, img: "Suco Dell Vale de Uva  310.webp" },
+  { id: "b8", name: "Suco Dell Vale de Maracujá 310ml", price: 6.00, img: "Suco Dell Vale de Maracuja 310.png" },
+  { id: "b9", name: "Água sem gás 500ml", price: 4.00, img: "Agua sem gás 500 ml.webp" },
+  { id: "b10", name: "Água com gás 500ml", price: 4.00, img: "Agua com gás.jpg" }
+];
+
+
+    /* ---------- Utilitários ---------- */
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+
+    /* ---------- Render produtos ---------- */
+    const productsList = document.getElementById('productsList');
+    products.forEach(p=>{
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.innerHTML = `
+        <img src="${p.img}" alt="${p.name}" onerror="this.style.opacity=0.5;this.style.objectFit='contain';this.src='placeholder.png'">
+        <div class="info">
+          <h3>${p.name}</h3>
+          <p class="muted">Sabor caseiro • Pedido rápido</p>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
+            <div class="price">${formatBRL(p.price)}</div>
+            <button data-id="${p.id}">Adicionar</button>
+          </div>
+        </div>
+      `;
+      productsList.appendChild(div);
+    });
+
+    /* ---------- Carrinho (localStorage) ---------- */
+    let cart = JSON.parse(localStorage.getItem('dona_cart')||'{}'); // {id: qty}
+    function saveCart(){ localStorage.setItem('dona_cart', JSON.stringify(cart)); renderCart(); }
+    function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+
+    /* ---------- Interações ---------- */
+    productsList.addEventListener('click', (e)=>{
+      if(e.target.tagName === 'BUTTON'){
+        const id = e.target.dataset.id;
+        cart[id] = (cart[id]||0) + 1;
+        saveCart();
+      }
+    });
+
+    document.getElementById('openCartBtn').addEventListener('click', ()=>{
+      document.querySelector('html,body').scrollTop = 0;
+      // small feedback
+      document.getElementById('cartBox').style.transform = 'scale(1.01)';
+      setTimeout(()=>document.getElementById('cartBox').style.transform = '', 200);
+    });
+
+    /* ---------- Render carrinho ---------- */
+    function renderCart(){
+      document.getElementById('cartCount').innerText = cartCount();
+      const itemsBox = document.getElementById('cartItems');
+      itemsBox.innerHTML = '';
+      let total = 0;
+      for(const id in cart){
+        const qty = cart[id];
+        const prod = products.find(p=>p.id===id);
+        if(!prod) continue;
+        total += prod.price * qty;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img src="${prod.img}" alt="${prod.name}" onerror="this.src='placeholder.png'">
+          <div style="flex:1">
+            <div style="font-weight:700">${prod.name}</div>
+            <div class="muted">${formatBRL(prod.price)} x ${qty} = <strong>${formatBRL(prod.price*qty)}</strong></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+            <div style="display:flex;gap:6px">
+              <button class="qty-btn" data-action="minus" data-id="${id}">-</button>
+              <div class="qty">${qty}</div>
+              <button class="qty-btn" data-action="plus" data-id="${id}">+</button>
+            </div>
+            <button class="remove" data-id="${id}" style="background:transparent;border:none;color:#c00;cursor:pointer">Remover</button>
+          </div>
+        `;
+        itemsBox.appendChild(div);
+      }
+      document.getElementById('cartTotal').innerText = formatBRL(total);
+      document.getElementById('cartCount').innerText = cartCount();
+
+      // empty message
+      if(Object.keys(cart).length === 0){
+        itemsBox.innerHTML = '<div class="muted">Seu carrinho está vazio. Adicione itens ao pedido.</div>';
+      }
+    }
+
+    // qty buttons
+    document.getElementById('cartBox').addEventListener('click', (e)=>{
+      if(e.target.classList.contains('qty-btn')){
+        const id = e.target.dataset.id;
+        const act = e.target.dataset.action;
+        if(act==='plus') cart[id] = (cart[id]||0) + 1;
+        else {
+          cart[id] = (cart[id]||0) - 1;
+          if(cart[id] <= 0) delete cart[id];
+        }
+        saveCart();
+      }
+      if(e.target.classList.contains('remove')){
+        const id = e.target.dataset.id;
+        delete cart[id];
+        saveCart();
+      }
+    });
+
+    /* ---------- Checkout UI logic ---------- */
+    const payRadios = document.querySelectorAll('input[name="pay"]');
+    function updatePayUI(){
+      const val = document.querySelector('input[name="pay"]:checked').value;
+      document.getElementById('cardFields').style.display = (val==='card' || val==='debit') ? 'block' : 'none';
+      document.getElementById('pixInfo').style.display = (val==='pix') ? 'block' : 'none';
+      document.getElementById('cashInfo').style.display = (val==='cash') ? 'block' : 'none';
+    }
+    payRadios.forEach(r=>r.addEventListener('change', updatePayUI));
+    updatePayUI();
+
+    /* ---------- Enviar pedido (simulação) ---------- */
+    document.getElementById('placeOrderBtn').addEventListener('click', async ()=>{
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      if(!name || !phone || !address){
+        document.getElementById('orderMsg').innerHTML = '<div class="muted">Preencha nome, telefone e endereço.</div>';
+        return;
+      }
+      if(Object.keys(cart).length === 0){
+        document.getElementById('orderMsg').innerHTML = '<div class="muted">Adicione itens ao carrinho antes de finalizar.</div>';
+        return;
+      }
+
+      const payMethod = document.querySelector('input[name="pay"]:checked').value;
+      // montar resumo do pedido
+      const items = [];
+      let subtotal = 0;
+      for(const id in cart){
+        const p = products.find(x=>x.id===id);
+        if(!p) continue;
+        items.push({id:p.id, name:p.name, qty:cart[id], price:p.price});
+        subtotal += p.price * cart[id];
+      }
+
+      // Simular chamada ao gateway de pagamentos:
+      document.getElementById('placeOrderBtn').disabled = true;
+      document.getElementById('placeOrderBtn').innerText = 'Processando...';
+
+      try {
+        if(payMethod === 'card' || payMethod === 'debit'){
+          // Aqui você deve integrar com um gateway real (ex: MercadoPago, PagSeguro, Stripe).
+          // Exibimos simulação de sucesso.
+          await fakeCardCharge({name, phone, address, items, subtotal, method:payMethod});
+          finishOrder({status:'paid', method:payMethod, name, phone, address, items, subtotal});
+        } else if(payMethod === 'pix'){
+          // Neste fluxo, você normalmente cria uma cobrança PIX no provedor e retorna QRCode / chave.
+          // Aqui mostramos instruções e consideramos pedido pendente até confirmação.
+          finishOrder({status:'pending-pix', method:payMethod, name, phone, address, items, subtotal});
+        } else {
+          // dinheiro
+          finishOrder({status:'pending-cash', method:payMethod, name, phone, address, items, subtotal});
+        }
+      } catch(err){
+        document.getElementById('orderMsg').innerHTML = '<div class="muted">Erro ao processar o pagamento. Tente novamente.</div>';
+      } finally {
+        document.getElementById('placeOrderBtn').disabled = false;
+        document.getElementById('placeOrderBtn').innerText = 'Finalizar compra';
+      }
+    });
+
+    function finishOrder(order){
+      // limpar carrinho (apenas na simulação)
+      cart = {};
+      saveCart();
+      renderCart();
+
+      // Mensagem
+      if(order.status === 'paid'){
+        document.getElementById('orderMsg').innerHTML = `<div class="success">🔔 Pedido confirmado e pago! Obrigado, ${order.name}. Em breve entregamos em: ${order.address} — Total: ${formatBRL(order.subtotal)}</div>`;
+      } else if(order.status === 'pending-pix'){
+        document.getElementById('orderMsg').innerHTML = `<div class="muted">🔔 Pedido registrado (aguardando pagamento PIX). Envie o PIX para a chave <strong>donaesfiha@pix.exemplo</strong> e confirme o pagamento via WhatsApp. Total: ${formatBRL(order.subtotal)}</div>`;
+      } else {
+        document.getElementById('orderMsg').innerHTML = `<div class="muted">🔔 Pedido registrado (Pagamento na entrega). Entregaremos em: ${order.address}. Total: ${formatBRL(order.subtotal)}</div>`;
+      }
+    }
+
+    function fakeCardCharge(data){
+      // simula atraso de rede
+      return new Promise((res)=>{
+        setTimeout(()=>res({ok:true, id:'fake_tx_12345'}), 1000);
+      });
+    }
+
+    /* ---------- Inicialização ---------- */
+    renderCart();
+  </script>
+</body>
+</html>
+  <!-- Botão flutuante do WhatsApp -->
+  <a href="https://wa.me/556198622400?text=Olá%20gostaria%20de%20fazer%20um%20pedido!" target="_blank" class="whatsapp-float">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="60">
+  </a>
+
+  <style>
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #25d366;
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+    .whatsapp-float img {
+      display: block;
+    }
+  </style>
+
+</body>
+</html>
+
+
